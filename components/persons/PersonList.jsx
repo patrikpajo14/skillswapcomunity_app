@@ -1,25 +1,41 @@
 import React from "react";
 import PersonCard from "./PersonCard";
+import toast from "react-hot-toast";
 
-const PersonList = () => {
-  const user = {
-    id: 1,
-    name: "patrik stojsavljevic",
-    email: "patrik.stojsavljevic@gmail.com",
-    phone: "095555555",
-    description: "patrik description",
-    achievements: "achievements",
-    skill: 1,
-    salary: 2000,
-    rating: 4.5,
-    experience: 2,
-    company: 1,
+const PersonList = ({ title = null, user }) => {
+  const handleSendSwap = () => {
+    toast.success("Swap sended successfuly!");
+  };
+
+  const handleOpenDrawer = () => {
+    toast.success("Drawer opened!");
   };
 
   return (
-    <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-2 md:gap-5">
-      <PersonCard user={user} />
-      <PersonCard user={user} />
+    <section className="mb-5">
+      {title && (
+        <div className="flex-between mb-5">
+          <h2 className="text-[20px] md:text-[24px] font-bold">{title}</h2>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
+        <PersonCard
+          user={user}
+          onClick={handleSendSwap}
+          handleOpenDrawer={handleOpenDrawer}
+        />
+        <PersonCard
+          user={user}
+          onClick={handleSendSwap}
+          handleOpenDrawer={handleOpenDrawer}
+        />
+        <PersonCard
+          user={user}
+          onClick={handleSendSwap}
+          handleOpenDrawer={handleOpenDrawer}
+        />
+      </div>
     </section>
   );
 };

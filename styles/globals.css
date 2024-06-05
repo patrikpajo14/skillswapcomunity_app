@@ -63,8 +63,8 @@ body.sidebar-open .sidebar {
 
 .sidebar-link.active .sidebar-icon,
 .sidebar-link:hover .sidebar-icon {
-  filter: brightness(0) invert(52%) sepia(80%) saturate(344%) hue-rotate(83deg)
-    brightness(87%) contrast(91%);
+  filter: brightness(0) invert(52%) sepia(17%) saturate(1130%)
+    hue-rotate(206deg) brightness(93%) contrast(94%);
 }
 
 .auth-page:before {

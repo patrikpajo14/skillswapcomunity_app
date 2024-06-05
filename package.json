@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.1.0",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@react-pdf/renderer": "^3.4.2",
+    "@smastrom/react-rating": "^1.5.0",
     "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",

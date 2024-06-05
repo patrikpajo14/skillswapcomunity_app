@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import ToasterContext from "./context/ToasterContext";
 import "@/styles/globals.css";
 import QueryProvider from "./context/QueryContext";
+import "@smastrom/react-rating/style.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -3,36 +3,28 @@ import useAuthStore from "@/app/store/AuthStore";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
-const Sidebar = ({currentUser}) => {
+const Sidebar = ({ currentUser }) => {
   const pathname = usePathname();
 
-  const {setUser} = useAuthStore();
+  const { setUser } = useAuthStore();
   useEffect(() => {
-    if(currentUser) setUser(currentUser);
+    if (currentUser) setUser(currentUser);
   }, [currentUser]);
 
-  const sidebarLinks = [
-    "/",
-    "offers",
-    "article-list",
-    "administration",
-    currentUser?.role === 1 && "users",
-  ];
+  const sidebarLinks = ["/", "find-swaps", "current-swaps", "profile"];
   const sidebarTranslate = [
     "Dashboard",
-    "Offers",
-    "Articles",
-    "Administration",
-    currentUser?.role === 1 && "Users",
+    "Find swaps",
+    "Current swaps",
+    "Profile",
   ];
   const sidebarIcons = [
     "/assets/icons/ico_dashboard.svg",
-    "/assets/icons/ico_offers.svg",
-    "/assets/icons/ico_article.svg",
-    "/assets/icons/ico_administration.svg",
-    currentUser?.role === 1 && "/assets/icons/ico_users.svg",
+    "/assets/icons/ico_add-user.svg",
+    "/assets/icons/ico_users.svg",
+    "/assets/icons/ico_profile.svg",
   ];
 
   return (
@@ -60,28 +52,28 @@ const Sidebar = ({currentUser}) => {
         <ul>
           {sidebarLinks.map((link, index) => {
             const isActive = pathname.endsWith(link);
-            if(link !== false){
+            if (link !== false) {
               return (
-                  <li className="relative" key={index}>
-                    <Link
-                        href={`/dashboard/${link}`}
-                        onClick={() => {
-                          document.body.classList.remove("sidebar-open");
-                        }}
-                        className={
-                          isActive ? "sidebar-link active" : "sidebar-link"
-                        }
-                    >
-                      <Image
-                          src={sidebarIcons[index]}
-                          alt={sidebarTranslate[index]}
-                          width="25"
-                          height="25"
-                          className={"sidebar-icon"}
-                      />
-                      {sidebarTranslate[index]}
-                    </Link>
-                  </li>
+                <li className="relative" key={index}>
+                  <Link
+                    href={`/dashboard/${link}`}
+                    onClick={() => {
+                      document.body.classList.remove("sidebar-open");
+                    }}
+                    className={
+                      isActive ? "sidebar-link active" : "sidebar-link"
+                    }
+                  >
+                    <Image
+                      src={sidebarIcons[index]}
+                      alt={sidebarTranslate[index]}
+                      width="25"
+                      height="25"
+                      className={"sidebar-icon"}
+                    />
+                    {sidebarTranslate[index]}
+                  </Link>
+                </li>
               );
             }
           })}
