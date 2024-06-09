@@ -3,6 +3,7 @@ import ToasterContext from "./context/ToasterContext";
 import "@/styles/globals.css";
 import QueryProvider from "./context/QueryContext";
 import "@smastrom/react-rating/style.css";
+import { AuthProvider } from "@/src/auth/context/auth/authContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,12 +16,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/*  <AuthProvider> */}
-        <QueryProvider>
-          <ToasterContext />
-          <main className="main w-[100%] h-[100%]">{children}</main>
-        </QueryProvider>
-        {/*</AuthProvider> */}
+        <AuthProvider>
+          <QueryProvider>
+            <ToasterContext />
+            <main className="main w-[100%] h-[100%]">{children}</main>
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );
