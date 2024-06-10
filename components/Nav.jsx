@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
 
 const Nav = ({ currentUser }) => {
-  const { logoutUser } = useAuthContext();
+  const { user, logoutUser } = useAuthContext();
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   return (
@@ -35,11 +35,11 @@ const Nav = ({ currentUser }) => {
             />
           </button>
         )}
-        {currentUser && (
+        {user && (
           <div className="flex relative gap-3 items-center">
-            <p>{currentUser?.name}</p>
+            <p>{user?.name}</p>
             <Avatar
-              user={currentUser}
+              user={user}
               onClick={() => {
                 setToggleDropdown(!toggleDropdown);
               }}

@@ -1,5 +1,4 @@
 "use client";
-import PropTypes from "prop-types";
 import { useState, useEffect, useCallback } from "react";
 import { useAuthContext } from "../context/auth/authContext";
 import { useRouter } from "next/navigation";
@@ -8,36 +7,28 @@ export default function AuthGuard({ children }) {
   return <Container>{children}</Container>;
 }
 
-AuthGuard.propTypes = {
-  children: PropTypes.node,
-};
-
-// ----------------------------------------------------------------------
-
 function Container({ children }) {
   const router = useRouter();
   const { session, logoutUser } = useAuthContext();
   const [checkUserSession, setCheckUserSession] = useState(false);
 
+  console.log("session", session)
+
   const checkSession = useCallback(() => {
     if (!session?.token) {
-      const searchParams = new URLSearchParams({
-        returnTo: window.location.pathname,
-      }).toString();
-
-      /* const href = `${paths.auth.login}?${searchParams || ""}`; */
       const href = `/`;
       logoutUser();
       router.replace(href);
     } else {
       setCheckUserSession(true);
     }
-  }, [session?.token, router]);
+  }, [session, logoutUser, router]);
 
   useEffect(() => {
     checkSession();
+    console.log("Check user session")
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [checkSession]);
 
   if (!checkUserSession) {
     return null;
@@ -45,7 +36,3 @@ function Container({ children }) {
 
   return <>{children}</>;
 }
-
-Container.propTypes = {
-  children: PropTypes.node,
-};

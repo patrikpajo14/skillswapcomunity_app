@@ -3,7 +3,7 @@ import React from "react";
 import Sidebar from "../Sidebar";
 import Nav from "../Nav";
 
-export default function DashboardLayout() {
+export default function DashboardLayout({children}) {
   const currentUser = {
     id: 1,
     name: "patrik stojsavljevic",

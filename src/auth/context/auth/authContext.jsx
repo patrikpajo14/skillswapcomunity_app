@@ -27,8 +27,8 @@ const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
   const removeUserFromLocalStorage = () => {
-    localStorage.removeItem("fp_user");
-    localStorage.removeItem("fp_session");
+    localStorage.removeItem("ssc_user");
+    localStorage.removeItem("ssc_session");
   };
 
   const updateUserBasicInfo = (value) => {

@@ -1,12 +1,13 @@
 import "@/styles/globals.css";
 import { AuthGuard } from "@/src/auth/guard";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
 
 export const metadata = {
   title: "Dashboard",
-  description: "Dashboard App For Creating Offers",
+  description: "Skill Swap Community dashboard",
 };
 
-const DashboardLayout = async ({ children }) => {
+const Layout = async ({ children }) => {
   return (
     <AuthGuard>
       <DashboardLayout>{children}</DashboardLayout>
@@ -14,4 +15,4 @@ const DashboardLayout = async ({ children }) => {
   );
 };
 
-export default DashboardLayout;
+export default Layout;
