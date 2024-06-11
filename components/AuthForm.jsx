@@ -44,39 +44,54 @@ const AuthForm = () => {
 
     setIsLoading(true);
     if (variant === "REGISTER") {
-      const response = await publicRequest.post(`/auth/signup`, {
-        email,
-        password,
-        fullName,
-      });
-      console.log(response.data, response);
-      if (response?.status === 200) {
-        setVariant("LOGIN");
-        toast.success("User has been registered");
-      } else {
-        toast.error("Something went wrong!");
+      try {
+        publicRequest
+            .post(`/auth/signup`, {
+              email,
+              password,
+              fullName,
+            })
+            .then((response)=>{
+              if (response?.status === 200) {
+                setVariant("LOGIN");
+                toast.success("User has been registered");
+              } else {
+                toast.error("Something went wrong!");
+              }
+            })
+            .catch(() => toast.error("Something went wrong!"))
+            .finally(() => setIsLoading(false));
+
+      }catch (e) {
+        console.log(e)
       }
-      setIsLoading(false);
     }
 
     if (variant === "LOGIN") {
-      const response = await publicRequest.post(`/auth/login`, {
-          email,
-          password,
-        });
-      console.log(response.data);
-      if (response?.status === 200) {
-        const session = response?.data;
-        const user = response?.data?.user;
+      try {
+        publicRequest
+            .post(`/auth/login`, {
+              email,
+              password,
+            })
+            .then((response)=>{
+              if (response?.status === 200) {
+                const session = response?.data;
+                const user = response?.data?.user;
 
-        setLoginUserSuccess(user, session);
-        router.push("/dashboard");
+                setLoginUserSuccess(user, session);
+                router.push("/dashboard");
 
-        toast.success("Logged in successfully!");
-      } else {
-        toast.error("Invalid credentials!");
+                toast.success("Logged in successfully!");
+              } else {
+                toast.error("Invalid credentials!");
+              }
+            })
+            .catch(() => toast.error("Wrong credentials!"))
+            .finally(() => setIsLoading(false));
+      }catch (e) {
+        console.log(e)
       }
-      setIsLoading(false);
     }
   };
 

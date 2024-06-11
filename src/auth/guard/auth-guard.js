@@ -12,14 +12,14 @@ function Container({ children }) {
   const { session, logoutUser } = useAuthContext();
   const [checkUserSession, setCheckUserSession] = useState(false);
 
-  console.log("session", session)
+  console.log("session", session);
 
   const checkSession = useCallback(() => {
     if (!session?.token) {
       const href = `/`;
       logoutUser();
       router.replace(href);
-    } else {
+    } else if (!checkUserSession) {
       setCheckUserSession(true);
     }
   }, [session, logoutUser, router]);
