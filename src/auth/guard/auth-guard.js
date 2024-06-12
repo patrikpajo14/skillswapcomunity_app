@@ -19,14 +19,14 @@ function Container({ children }) {
       const href = `/`;
       logoutUser();
       router.replace(href);
-    } else if (!checkUserSession) {
+    } else {
       setCheckUserSession(true);
     }
   }, [session, logoutUser, router]);
 
   useEffect(() => {
     checkSession();
-    console.log("Check user session")
+    console.log("Check user session");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkSession]);
 

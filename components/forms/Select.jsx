@@ -21,7 +21,7 @@ const Select = ({
   );
 
   return (
-    <div className="z-[100]">
+    <div className="z-[100] flex-1">
       <label
         className="
         block
@@ -52,9 +52,9 @@ const Select = ({
               block 
               w-full 
               rounded-[5px] 
-              py-[8px]
+              py-[7px]
               px-[12px]
-              sm:py-[10.5px]
+              sm:py-[10px]
               sm:px-[15px]
               text-black
               border-1
@@ -69,6 +69,7 @@ const Select = ({
               sm:text-md 
               capitalize
             `,
+            errors[name] && "border-red-500 bg-red-50 focus:border-red-500",
             disabled && "opacity-50 cursor-default"
           )}
         >

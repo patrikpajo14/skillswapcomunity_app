@@ -5,8 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthContext } from "../context/auth/authContext";
 import PageLoader from "@/components/PageLoader/PageLoader";
 
-// ----------------------------------------------------------------------
-
 export default function GuestGuard({ children }) {
   return <Container>{children}</Container>;
 }
@@ -14,7 +12,6 @@ export default function GuestGuard({ children }) {
 function Container({ children }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const returnTo = "/";
   const { session } = useAuthContext();
   const check = useCallback(() => {

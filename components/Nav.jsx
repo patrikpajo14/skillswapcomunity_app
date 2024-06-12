@@ -8,6 +8,7 @@ import { useAuthContext } from "@/src/auth/context/auth/authContext";
 
 const Nav = ({ currentUser }) => {
   const { user, logoutUser } = useAuthContext();
+  console.log(user);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
@@ -27,7 +27,6 @@ const AuthForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -46,112 +45,112 @@ const AuthForm = () => {
     if (variant === "REGISTER") {
       try {
         publicRequest
-            .post(`/auth/signup`, {
-              email,
-              password,
-              fullName,
-            })
-            .then((response)=>{
-              if (response?.status === 200) {
-                setVariant("LOGIN");
-                toast.success("User has been registered");
-              } else {
-                toast.error("Something went wrong!");
-              }
-            })
-            .catch(() => toast.error("Something went wrong!"))
-            .finally(() => setIsLoading(false));
-
-      }catch (e) {
-        console.log(e)
+          .post(`/auth/signup`, {
+            email,
+            password,
+            fullName,
+          })
+          .then((response) => {
+            if (response?.status === 200) {
+              setVariant("LOGIN");
+              toast.success("User has been registered");
+            } else {
+              toast.error("Something went wrong!");
+            }
+          })
+          .catch(() => toast.error("Something went wrong!"))
+          .finally(() => setIsLoading(false));
+      } catch (e) {
+        console.log(e);
       }
     }
 
     if (variant === "LOGIN") {
       try {
         publicRequest
-            .post(`/auth/login`, {
-              email,
-              password,
-            })
-            .then((response)=>{
-              if (response?.status === 200) {
-                const session = response?.data;
-                const user = response?.data?.user;
+          .post(`/auth/login`, {
+            email,
+            password,
+          })
+          .then((response) => {
+            if (response?.status === 200) {
+              console.log(response);
+              const session = response?.data;
+              const user = response?.data?.user;
 
-                setLoginUserSuccess(user, session);
-                router.push("/dashboard");
+              setLoginUserSuccess(user, session);
+              router.push("/dashboard");
 
-                toast.success("Logged in successfully!");
-              } else {
-                toast.error("Invalid credentials!");
-              }
-            })
-            .catch(() => toast.error("Wrong credentials!"))
-            .finally(() => setIsLoading(false));
-      }catch (e) {
-        console.log(e)
+              toast.success("Logged in successfully!");
+            } else {
+              toast.error("Invalid credentials!");
+            }
+          })
+          .catch(() => toast.error("Wrong credentials!"))
+          .finally(() => setIsLoading(false));
+      } catch (e) {
+        console.log(e);
       }
     }
   };
 
   return (
-      <div className="w-full">
-        <h1 className="text-2xl font-bold mb-5">
-          {variant === "LOGIN"
-              ? "Login with your Account"
-              : "Create your account"}
-        </h1>
-        <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-          {variant === "REGISTER" && (
-              <Input
-                  disabled={isLoading}
-                  register={register}
-                  errors={errors}
-                  required
-                  id="name"
-                  label="Name"
-              />
-          )}
+    <div className="w-full">
+      <h1 className="text-2xl font-bold mb-5">
+        {variant === "LOGIN"
+          ? "Login with your Account"
+          : "Create your account"}
+      </h1>
+      <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
+        {variant === "REGISTER" && (
           <Input
-              disabled={isLoading}
-              register={register}
-              errors={errors}
-              required
-              id="email"
-              label="Email"
-              type="email"
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            required
+            id="name"
+            label="Name"
           />
-          <Input
-              disabled={isLoading}
-              register={register}
-              errors={errors}
-              required
-              id="password"
-              label="Password"
-              type="password"
-          />
-          <div className="pt-4">
-            <Button disabled={isLoading} fullWidth type="submit">
-              {variant === "LOGIN" ? "Sign in" : "Register"}
-            </Button>
-          </div>
-        </form>
-
-        <div className="text-sm mt-6 px-2 text-gray-500">
-          <p>
-            {variant === "LOGIN"
-                ? "You don't have account? "
-                : "Already have an account? "}
-            <button
-                onClick={toggleVariant}
-                className="cursor-pointer text-primary-red hover:underline"
-            >
-              {variant === "LOGIN" ? " Create account" : " Login"}
-            </button>
-          </p>
+        )}
+        <Input
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+          id="email"
+          label="Email"
+          type="email"
+        />
+        <Input
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+          id="password"
+          label="Password"
+          type="password"
+        />
+        <div className="pt-4">
+          <Button disabled={isLoading} fullWidth type="submit">
+            {variant === "LOGIN" ? "Sign in" : "Register"}
+          </Button>
         </div>
+      </form>
+
+      <div className="text-sm mt-6 px-2 text-gray-500">
+        <p>
+          {variant === "LOGIN"
+            ? "You don't have account? "
+            : "Already have an account? "}
+          <button
+            onClick={toggleVariant}
+            className="cursor-pointer text-primary-red hover:underline"
+          >
+            {variant === "LOGIN" ? " Create account" : " Login"}
+          </button>
+        </p>
       </div>
+    </div>
   );
 };
 

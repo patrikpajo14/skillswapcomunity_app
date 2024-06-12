@@ -9,9 +9,10 @@ const Input = ({
   type = "text",
   disabled,
   sx,
+  styles,
 }) => {
   return (
-    <div>
+    <div className={styles}>
       <label
         htmlFor={id}
         className="
