@@ -5,10 +5,13 @@ import Button from "/components/Button";
 import Image from "next/image";
 import Select from "../forms/Select";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
+import {useGetSkills} from "@/app/actions/GetSkills";
 
 export default function ProfileForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
+  const {data: skills, isLoading: skillsLoading} = useGetSkills();
+
   const {
     register,
     handleSubmit,
@@ -61,7 +64,7 @@ export default function ProfileForm() {
     <div className="card">
       <div className="w-full p-5">
         <form
-          className="space-y-2 flex gap-8"
+          className="space-y-2 flex justify-center flex-wrap md:flex-nowrap gap-8"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="max-w-[350px]">
@@ -70,10 +73,10 @@ export default function ProfileForm() {
               alt="profile picture"
               width={300}
               height={300}
-              className="w-full h-auto md:w-[300px]"
+              className="w-full h-auto min-w-[200px] md:w-[300px]"
             />
           </div>
-          <div className="w-full flex flex-wrap gap-4">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-2 md:gap-5">
             <Input
               disabled={isLoading}
               register={register}
@@ -111,17 +114,13 @@ export default function ProfileForm() {
             <Select
               label={"Skill"}
               placeholder={"Select skill..."}
-              /* disabled={loading} */
+              disabled={skillsLoading}
+              isLoading={skillsLoading}
               name={"skillId"}
               errors={errors}
               register={register}
-            >
-              {skils.map((option, index) => (
-                <option key={index} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
-            </Select>
+              optionList={skills?.data}
+             />
             <Input
               disabled={isLoading}
               register={register}
@@ -140,20 +139,7 @@ export default function ProfileForm() {
               label="Experience"
               type="number"
             />
-            <Select
-              label={"Company"}
-              placeholder={"Select company..."}
-              /* disabled={loading} */
-              name={"companyId"}
-              errors={errors}
-              register={register}
-            >
-              {company.map((option, index) => (
-                <option key={index} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
-            </Select>
+
             <Input
               disabled={isLoading}
               register={register}

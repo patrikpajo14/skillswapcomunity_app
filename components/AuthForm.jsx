@@ -74,7 +74,6 @@ const AuthForm = () => {
           })
           .then((response) => {
             if (response?.status === 200) {
-              console.log(response);
               const session = response?.data;
               const user = response?.data?.user;
 

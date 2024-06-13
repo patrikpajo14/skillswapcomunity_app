@@ -1,18 +1,10 @@
 "use client";
-import useAuthStore from "@/app/store/AuthStore";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
-const Sidebar = ({ currentUser }) => {
+const Sidebar = () => {
   const pathname = usePathname();
-
-  const { setUser } = useAuthStore();
-  useEffect(() => {
-    if (currentUser) setUser(currentUser);
-  }, [currentUser]);
-
   const sidebarLinks = ["/", "find-swaps", "current-swaps", "profile"];
   const sidebarTranslate = [
     "Dashboard",

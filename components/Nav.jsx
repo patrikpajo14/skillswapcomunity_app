@@ -6,9 +6,8 @@ import Image from "next/image";
 import clsx from "clsx";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
 
-const Nav = ({ currentUser }) => {
+const Nav = () => {
   const { user, logoutUser } = useAuthContext();
-  console.log(user);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   return (
@@ -16,26 +15,22 @@ const Nav = ({ currentUser }) => {
       <div
         className={clsx(
           `flex justify-between w-[100%] md:w-max`,
-          currentUser?.activated === 1 && "justify-between",
-          currentUser?.activated === 0 && "flex-end"
         )}
       >
-        {currentUser?.activated !== 0 && (
           <button
-            className="block md:hidden"
-            onClick={() => {
-              document.body.classList.toggle("no-scroll");
-              document.body.classList.toggle("sidebar-open");
-            }}
+              className="block md:hidden"
+              onClick={() => {
+                  document.body.classList.toggle("no-scroll");
+                  document.body.classList.toggle("sidebar-open");
+              }}
           >
-            <Image
-              src={"/assets/icons/ico_menu.svg"}
-              width="25"
-              height="25"
-              alt="menu"
-            />
+              <Image
+                  src={"/assets/icons/ico_menu.svg"}
+                  width="25"
+                  height="25"
+                  alt="menu"
+              />
           </button>
-        )}
         {user && (
           <div className="flex relative gap-3 items-center">
             <p>{user?.name}</p>

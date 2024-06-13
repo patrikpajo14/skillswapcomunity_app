@@ -12,8 +12,6 @@ function Container({ children }) {
   const { session, logoutUser } = useAuthContext();
   const [checkUserSession, setCheckUserSession] = useState(false);
 
-  console.log("session", session);
-
   const checkSession = useCallback(() => {
     if (!session?.token) {
       const href = `/`;
@@ -26,9 +24,8 @@ function Container({ children }) {
 
   useEffect(() => {
     checkSession();
-    console.log("Check user session");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checkSession]);
+  }, [session?.token]);
 
   if (!checkUserSession) {
     return null;

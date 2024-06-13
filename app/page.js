@@ -1,3 +1,4 @@
+"use client"
 import AuthForm from "@/components/AuthForm";
 import "@/styles/globals.css";
 import Image from "next/image";
