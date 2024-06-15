@@ -1,9 +1,11 @@
-"use client"
+"use client";
 import AuthForm from "@/components/AuthForm";
 import "@/styles/globals.css";
 import Image from "next/image";
+import { useTranslation } from "../i18n";
 
-export default async function Home() {
+export default async function Home({ params: { lng } }) {
+  const { t } = await useTranslation(lng);
   return (
     <div className="auth-page">
       <div className="flex-1 h-full relative">
@@ -16,6 +18,7 @@ export default async function Home() {
         />
       </div>
       <div className="inner card py-[20px] px-[35px] w-[360px] flex flex-col justify-center">
+        {t("title")}
         <AuthForm />
       </div>
     </div>
