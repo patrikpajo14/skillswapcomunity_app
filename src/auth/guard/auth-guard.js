@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuthContext } from "../context/auth/authContext";
 import { useRouter } from "next/navigation";
+import useLangStore from "@/app/store/LangStore";
 
 export default function AuthGuard({ children }) {
   return <Container>{children}</Container>;
@@ -9,12 +10,13 @@ export default function AuthGuard({ children }) {
 
 function Container({ children }) {
   const router = useRouter();
+  const { currentLang } = useLangStore();
   const { session, logoutUser } = useAuthContext();
   const [checkUserSession, setCheckUserSession] = useState(false);
 
   const checkSession = useCallback(() => {
     if (!session?.token) {
-      const href = `/`;
+      const href = `/${currentLang}/`;
       logoutUser();
       router.replace(href);
     } else {

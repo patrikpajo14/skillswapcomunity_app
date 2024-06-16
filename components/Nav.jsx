@@ -7,10 +7,14 @@ import clsx from "clsx";
 import { Trans } from "react-i18next/TransWithoutContext";
 import { languages } from "@/app/i18n/settings";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const Nav = () => {
+const Nav = ({ lng, setLang }) => {
+  const pathname = usePathname();
   const { user, logoutUser } = useAuthContext();
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const path = pathname.substring(3, pathname.length);
 
   return (
     <nav className="flex-col-reverse flex md:flex-row gap-3 flex-end md:items-center w-full mb-7 md:mb-16 pt-3">
@@ -33,24 +37,30 @@ const Nav = () => {
         </div>
         <div className="flex gap-3 items-center">
           <div className="languages flex gap-2 items-center">
-            <Trans i18nKey="languageSwitcher" t={t}>
-              <Image
-                src={`/assets/icons/ico_${lng}.svg`}
-                width="20"
-                height="20"
-                alt="lang"
-              />
-            </Trans>
-            {languages
-              .filter((l) => lng !== l)
-              .map((l, index) => {
-                return (
-                  <span key={l}>
-                    {index > 0 && " or "}
-                    <Link href={`/${l}`}>{l}</Link>
-                  </span>
-                );
-              })}
+            {languages.map((l) => {
+              return (
+                <span key={l}>
+                  <Link
+                    href={`/${l}${path}`}
+                    onClick={() => {
+                      setLang(l);
+                    }}
+                    className={clsx(
+                      `uppercase flex gap-2 items-center`,
+                      lng === l && "font-bold"
+                    )}
+                  >
+                    <Image
+                      src={`/assets/icons/ico_${l}.svg`}
+                      width="20"
+                      height="20"
+                      alt="lang"
+                    />{" "}
+                    {l}
+                  </Link>
+                </span>
+              );
+            })}
           </div>
 
           {user && (

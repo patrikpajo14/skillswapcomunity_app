@@ -49,8 +49,8 @@ const Dashboard = () => {
 
       <WidgetsRow />
 
-      <PersonList title={"Last send swaps"} user={lastSendUser} />
-      <PersonList title={"Last received swaps"} user={lastRecivedUser} />
+      {/* <PersonList title={"Last send swaps"} user={lastSendUser} />
+      <PersonList title={"Last received swaps"} user={lastRecivedUser} /> */}
     </section>
   );
 };

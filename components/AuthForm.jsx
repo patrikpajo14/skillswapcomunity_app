@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast";
 import publicRequest from "../src/auth/utils/app-public-request";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
 
-const AuthForm = () => {
+const AuthForm = ({ lng, t }) => {
   const router = useRouter();
   const [variant, setVariant] = useState("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +78,7 @@ const AuthForm = () => {
               const user = response?.data?.user;
 
               setLoginUserSuccess(user, session);
-              router.push("/dashboard");
+              router.push(`/${lng}/dashboard`);
 
               toast.success("Logged in successfully!");
             } else {
@@ -96,9 +96,7 @@ const AuthForm = () => {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold mb-5">
-        {variant === "LOGIN"
-          ? "Login with your Account"
-          : "Create your account"}
+        {variant === "LOGIN" ? t("login_title") : t("create_acc_title")}
       </h1>
       <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
         {variant === "REGISTER" && (
@@ -108,7 +106,7 @@ const AuthForm = () => {
             errors={errors}
             required
             id="name"
-            label="Name"
+            label={t("name")}
           />
         )}
         <Input
@@ -117,7 +115,7 @@ const AuthForm = () => {
           errors={errors}
           required
           id="email"
-          label="Email"
+          label={t("email")}
           type="email"
         />
         <Input
@@ -126,26 +124,24 @@ const AuthForm = () => {
           errors={errors}
           required
           id="password"
-          label="Password"
+          label={t("password")}
           type="password"
         />
         <div className="pt-4">
           <Button disabled={isLoading} fullWidth type="submit">
-            {variant === "LOGIN" ? "Sign in" : "Register"}
+            {variant === "LOGIN" ? t("signin") : t("register")}
           </Button>
         </div>
       </form>
 
       <div className="text-sm mt-6 px-2 text-gray-500">
         <p>
-          {variant === "LOGIN"
-            ? "You don't have account? "
-            : "Already have an account? "}
+          {variant === "LOGIN" ? t("dont_have_acc") : t("have_acc")}
           <button
             onClick={toggleVariant}
             className="cursor-pointer text-primary-red hover:underline"
           >
-            {variant === "LOGIN" ? " Create account" : " Login"}
+            {variant === "LOGIN" ? t("create_acc") : t("login")}
           </button>
         </p>
       </div>

@@ -1,4 +1,13 @@
 {
-  "title": "Hi there!",
-  "to-second-page": "To second page"
+  "login_title": "Login with your Account",
+  "create_acc_title": "Create your account",
+  "name": "Name",
+  "email": "Email",
+  "password": "Password",
+  "signin": "Sign in",
+  "register": "Register",
+  "dont_have_acc": "You don't have account? ",
+  "have_acc": "Already have an account? ",
+  "create_acc": " Create account",
+  "login": "Login"
 }

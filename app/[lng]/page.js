@@ -18,8 +18,7 @@ export default async function Home({ params: { lng } }) {
         />
       </div>
       <div className="inner card py-[20px] px-[35px] w-[360px] flex flex-col justify-center">
-        {t("title")}
-        <AuthForm />
+        <AuthForm t={t} lng={lng} />
       </div>
     </div>
   );

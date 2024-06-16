@@ -54,28 +54,6 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("ssc_session", JSON.stringify(session));
   };
 
-  /*   const regenerateTokens = (
-    newAccessToken,
-    newRefreshToken,
-    expire,
-    refresh_expire
-  ) => {
-    const existingSession = state.session;
-    if (existingSession) {
-      existingSession.access_token = newAccessToken;
-      existingSession.refresh_token = newRefreshToken;
-      existingSession.expire = expire;
-      existingSession.refresh_expire = refresh_expire;
-      dispatch({
-        type: REGENERATE_ACCESS_TOKEN,
-        payload: existingSession,
-      });
-      localStorage.setItem("fp_session", JSON.stringify(existingSession));
-    } else {
-      console.error("No existing session data found in local storage.");
-    }
-  }; */
-
   const logoutUser = async () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();

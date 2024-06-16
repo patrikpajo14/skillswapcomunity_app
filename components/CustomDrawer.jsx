@@ -55,7 +55,7 @@ export default function CustomDrawer({ isOpened, title, children, onClose }) {
               width: 0,
               transition: { delay: 0.2, duration: 0.3 },
             }}
-            className="pointer-events-none fixed inset-y-0 right-0 flex max-w-[700px]"
+            className="pointer-events-none fixed inset-y-0 right-0 flex max-w-[500px]"
           >
             <motion.div
               initial="closed"

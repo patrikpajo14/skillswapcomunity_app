@@ -19,7 +19,7 @@ const PersonCard = ({ user, onClick, handleOpenDrawer }) => {
         </div>
         <div className="flex-1">
           <div className="flex-between ">
-            <h3 className="font-bold text-lg">{user.name}</h3>
+            <h3 className="font-bold text-lg">{user?.name}</h3>
             <IconButton onClick={handleOpenDrawer}>
               <Image
                 src="/assets/icons/ico_info.svg"
@@ -29,15 +29,17 @@ const PersonCard = ({ user, onClick, handleOpenDrawer }) => {
               />
             </IconButton>
           </div>
-          <div className="flex items-center gap-2">
-            <p className="text-sm">Musician</p>
-            <Rating value={user.rating} readOnly={true} size={60} />
+          <div className="">
+            <p className="text-sm">{user?.skill?.name}</p>
+          </div>
+          <div className="py-1">
+            <Rating value={user?.rating} readOnly={true} size={60} />
           </div>
           <p className="text-sm font-medium">
             Expirience ={" "}
-            <span className="text-primary-red">{user.experience} years</span>
+            <span className="text-primary-red">{user?.experience} years</span>
           </p>
-          <p className="text-sm">Cost: {user.salary}</p>
+          <p className="text-sm">Cost: {user?.salary}</p>
           <Button sx={"w-full mt-3"} onClick={onClick}>
             Swap
           </Button>

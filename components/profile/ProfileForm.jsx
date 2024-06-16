@@ -5,12 +5,16 @@ import Button from "/components/Button";
 import Image from "next/image";
 import Select from "../forms/Select";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
-import {useGetSkills} from "@/app/actions/GetSkills";
+import { useGetSkills } from "@/app/actions/GetSkills";
+import { useUpdateUser } from "@/app/actions/GetUsers";
 
 export default function ProfileForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAuthContext();
-  const {data: skills, isLoading: skillsLoading} = useGetSkills();
+  const { user, updateUserBasicInfo } = useAuthContext();
+  const { data: skills, isLoading: skillsLoading } = useGetSkills();
+  const { mutate: updateUser } = useUpdateUser();
+
+  console.log("USER", user);
 
   const {
     register,
@@ -20,27 +24,16 @@ export default function ProfileForm() {
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
-      password: user?.password || "",
+      password: "",
       phone: user?.phone || "",
       salary: user?.salary || "",
       experience: user?.experience || "",
       description: user?.description || "",
+      achievements: user?.achievements || "",
       skill: user?.skill?.id || "",
       company: user?.company?.id || "",
     },
   });
-
-  const skils = [
-    {
-      id: 1,
-      name: "frontend developer",
-    },
-    {
-      id: 2,
-      name: "backend developer",
-    },
-  ];
-
   const company = [
     {
       id: 1,
@@ -53,11 +46,26 @@ export default function ProfileForm() {
   ];
 
   const onSubmit = async (data) => {
-    const email = data.email;
-    const password = data.password;
-    const fullName = data.name;
+    console.log("SUBMIT", data);
 
-    setIsLoading(true);
+    const updatedUser = {
+      id: user?.id,
+      name: data?.name,
+      email: data?.email,
+      password: data?.password,
+      phone: data?.phone,
+      description: data?.description,
+      achievements: data?.achievements,
+      skill: null,
+      salary: data?.salary,
+      rating: null,
+      experience: data?.experience,
+      company: null,
+    };
+
+    updateUser({ id: user?.id, body: updatedUser });
+
+    updateUserBasicInfo(data);
   };
 
   return (
@@ -89,7 +97,6 @@ export default function ProfileForm() {
               disabled={isLoading}
               register={register}
               errors={errors}
-              required
               id="email"
               label="Email"
               type="email"
@@ -98,7 +105,6 @@ export default function ProfileForm() {
               disabled={isLoading}
               register={register}
               errors={errors}
-              required
               id="phone"
               label="Phone"
             />
@@ -106,7 +112,6 @@ export default function ProfileForm() {
               disabled={isLoading}
               register={register}
               errors={errors}
-              required
               id="password"
               label="Password"
               type="password"
@@ -120,12 +125,11 @@ export default function ProfileForm() {
               errors={errors}
               register={register}
               optionList={skills?.data}
-             />
+            />
             <Input
               disabled={isLoading}
               register={register}
               errors={errors}
-              required
               id="salary"
               label="Salary"
               type="number"
@@ -134,7 +138,6 @@ export default function ProfileForm() {
               disabled={isLoading}
               register={register}
               errors={errors}
-              required
               id="experience"
               label="Experience"
               type="number"
@@ -144,9 +147,16 @@ export default function ProfileForm() {
               disabled={isLoading}
               register={register}
               errors={errors}
-              required
               id="description"
               label="Description"
+            />
+
+            <Input
+              disabled={isLoading}
+              register={register}
+              errors={errors}
+              id="achievements"
+              label="Achievements"
             />
             <div className="w-[200px]">
               <Button disabled={isLoading} fullWidth type="submit">

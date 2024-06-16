@@ -1,32 +1,51 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import appPublicRequest from "@/src/auth/utils/app-public-request";
+import useProtectedRequestHeaders from "@/src/auth/utils/useProtectedRequestHeaders";
 
-const fetchUsers = () => {
-  return axios.get("/api/users");
+const fetchUsers = ({ queryKey }) => {
+  const [_, axiosPrivate] = queryKey;
+  return axiosPrivate("/person/all");
 };
 
 export const useGetUsers = () => {
-  return useQuery("users", fetchUsers, {
+  const axiosPrivate = useProtectedRequestHeaders();
+  return useQuery(["users", axiosPrivate], fetchUsers, {
     select: (data) => {
       return data.data;
     },
   });
 };
 
-const updateUserStatus = (data) => {
-  console.log("updateUserStatus", data);
-  return axios.put(`/api/users/status`, data);
+const fetchUserById = (id) => {
+  return appPublicRequest.get(`/person/${id}`);
 };
 
-export const useUpdateUserStatus = () => {
+export const useGetUserById = (id) => {
+  return useQuery(["user-by-id", id], fetchUserById, {
+    select: (data) => {
+      return data.data;
+    },
+    enabled: !!id,
+  });
+};
+
+const updateUser = (data) => {
+  console.log("updateUserStatus", data);
+  return appPublicRequest.put(`/person/${data.id}`, data.body);
+};
+
+export const useUpdateUser = () => {
   const queryClient = useQueryClient();
-  return useMutation(updateUserStatus, {
+  return useMutation(updateUser, {
     onSuccess: () => {
+      toast.success("Profile Updated!");
       queryClient.invalidateQueries("users");
     },
-    onError: () => {
-      toast.error("Status change failed!");
+    onError: (e) => {
+      console.log(e);
+      toast.error("Profile change failed!");
     },
   });
 };
