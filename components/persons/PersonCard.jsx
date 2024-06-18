@@ -4,7 +4,13 @@ import IconButton from "../IconButton";
 import Button from "../Button";
 import Rating from "../general/Rating";
 
-const PersonCard = ({ user, onClick, handleOpenDrawer }) => {
+const PersonCard = ({
+  user,
+  onClick,
+  handleOpenDrawer,
+  sent = false,
+  recived = false,
+}) => {
   return (
     <div className="card">
       <div className="flex gap-3 p-3">
@@ -41,7 +47,7 @@ const PersonCard = ({ user, onClick, handleOpenDrawer }) => {
           </p>
           <p className="text-sm">Cost: {user?.salary}</p>
           <Button sx={"w-full mt-3"} onClick={onClick}>
-            Swap
+            Connect
           </Button>
         </div>
       </div>

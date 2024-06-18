@@ -32,21 +32,23 @@ export default function PersonDetails({ user, onClick }) {
           </p>
           <p className="text-sm">Cost: {user?.salary}</p>
           <Button sx={"w-full mt-3"} onClick={onClick}>
-            Swap
+            Connect
           </Button>
         </div>
       </div>
       <div className="about mb-6">
         <h3 className="font-bold text-lg mb-3">About</h3>
-        <div className="flex gap-4 items-center mb-3">
-          <Image
-            src="/assets/icons/ico_phone.svg"
-            alt="phone"
-            width={20}
-            height={20}
-          />
-          <a href={`tel:${user?.phone}`}>{user?.phone}</a>
-        </div>
+        {user?.phone && (
+          <div className="flex gap-4 items-center mb-3">
+            <Image
+              src="/assets/icons/ico_phone.svg"
+              alt="phone"
+              width={20}
+              height={20}
+            />
+            <a href={`tel:${user?.phone}`}>{user?.phone}</a>
+          </div>
+        )}
         <div className="flex gap-4 items-center">
           <Image
             src="/assets/icons/ico_email.svg"
@@ -58,15 +60,18 @@ export default function PersonDetails({ user, onClick }) {
         </div>
       </div>
 
-      <div className="about mb-6">
-        <h3 className="font-bold text-lg mb-2">Description</h3>
-        <p>{user?.description}</p>
-      </div>
-
-      <div className="about mb-6">
-        <h3 className="font-bold text-lg mb-2">Achievements</h3>
-        <p>{user?.achievements}</p>
-      </div>
+      {user?.description && (
+        <div className="about mb-6">
+          <h3 className="font-bold text-lg mb-2">Description</h3>
+          <p>{user?.description}</p>
+        </div>
+      )}
+      {user?.achievements && (
+        <div className="about mb-6">
+          <h3 className="font-bold text-lg mb-2">Achievements</h3>
+          <p>{user?.achievements}</p>
+        </div>
+      )}
     </div>
   );
 }

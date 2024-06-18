@@ -61,6 +61,8 @@ export default function ProfileForm() {
       rating: null,
       experience: data?.experience,
       company: null,
+      sentRequests: user?.sentRequests || [],
+      receivedRequests: user?.receivedRequests || [],
     };
 
     updateUser({ id: user?.id, body: updatedUser });

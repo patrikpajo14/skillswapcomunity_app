@@ -4,14 +4,22 @@ import toast from "react-hot-toast";
 import CustomDrawer from "../CustomDrawer";
 import PersonDetails from "./PersonDetails";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
+import { useCreateRequest } from "@/app/actions/GetRequests";
 
-const PersonList = ({ title = null, users }) => {
+const PersonList = ({
+  title = null,
+  users,
+  recivedList = false,
+  sentList = false,
+}) => {
   const { user } = useAuthContext();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleSendSwap = () => {
-    toast.success("Swap sended successfuly!");
+  const { mutate: sendRequest } = useCreateRequest();
+
+  const handleSendSwap = (recipientId) => {
+    sendRequest({ senderId: user?.id, recipientId });
   };
 
   const handleCloseDrawer = () => {
@@ -40,7 +48,11 @@ const PersonList = ({ title = null, users }) => {
             <PersonCard
               key={person.id}
               user={person}
-              onClick={handleSendSwap}
+              recived={recivedList}
+              sent={recivedList}
+              onClick={() => {
+                handleSendSwap(person.id);
+              }}
               handleOpenDrawer={() => {
                 handleOpenDrawer(person);
               }}
@@ -53,7 +65,14 @@ const PersonList = ({ title = null, users }) => {
         onClose={handleCloseDrawer}
         title={"User details"}
       >
-        <PersonDetails user={selectedUser} onClick={handleSendSwap} />
+        {selectedUser && (
+          <PersonDetails
+            user={selectedUser}
+            onClick={() => {
+              handleSendSwap(selectedUser?.id);
+            }}
+          />
+        )}
       </CustomDrawer>
     </section>
   );
