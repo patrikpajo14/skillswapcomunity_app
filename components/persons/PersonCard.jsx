@@ -7,10 +7,12 @@ import Rating from "../general/Rating";
 const PersonCard = ({
   user,
   onClick,
+  onDelete,
   handleOpenDrawer,
-  sent = false,
   recived = false,
+  sent = false,
 }) => {
+  console.log("SENT", sent);
   return (
     <div className="card">
       <div className="flex gap-3 p-3">
@@ -46,9 +48,15 @@ const PersonCard = ({
             <span className="text-primary-red">{user?.experience} years</span>
           </p>
           <p className="text-sm">Cost: {user?.salary}</p>
-          <Button sx={"w-full mt-3"} onClick={onClick}>
-            Connect
-          </Button>
+          {sent ? (
+            <Button sx={"w-full mt-3"} onClick={onDelete}>
+              Unconnect
+            </Button>
+          ) : (
+            <Button sx={"w-full mt-3"} onClick={onClick}>
+              Connect
+            </Button>
+          )}
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export default function FindSwaps() {
     <section>
       <PageSubheader title={"Find swaps"} />
 
-      {!usersLoading && <PersonList users={users} />}
+      {!usersLoading && users && <PersonList users={users} />}
     </section>
   );
 }

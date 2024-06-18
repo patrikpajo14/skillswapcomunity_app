@@ -17,14 +17,22 @@ export default function RequestsWrap() {
     if (!requestsLoading) {
       const tmpSend = requests
         .filter((request) => request.sender.id === user.id)
-        .map((request) => request.recipient)
+        .map((request) => ({
+          ...request.recipient,
+          status: request.status,
+          requestId: request.id,
+        }))
         .slice(0, 3);
       setLastSendList(tmpSend);
       console.log("lastSendList", tmpSend);
 
       const tmpRecived = requests
         .filter((request) => request.recipient.id === user.id)
-        .map((request) => request.sender)
+        .map((request) => ({
+          ...request.sender,
+          status: request.status,
+          requestId: request.id,
+        }))
         .slice(0, 3);
       setLastRecivedList(tmpRecived);
     }
@@ -32,7 +40,7 @@ export default function RequestsWrap() {
   return (
     <div>
       {!requestsLoading && lastSendList.length > 0 && (
-        <PersonList title={"Last send swaps"} users={lastSendList} />
+        <PersonList title={"Last sent swaps"} users={lastSendList} />
       )}
       {!requestsLoading && lastRecivedList.length > 0 && (
         <PersonList
