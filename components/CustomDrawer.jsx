@@ -35,7 +35,7 @@ export default function CustomDrawer({ isOpened, title, children, onClose }) {
     <AnimatePresence>
       {isOpened && (
         <motion.div
-          className="relative z-10"
+          className="relative z-50"
           aria-labelledby="slide-over-title"
           role="dialog"
           aria-modal="true"

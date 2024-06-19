@@ -5,12 +5,13 @@ import { useGetRequests } from "@/app/actions/GetRequests";
 import PersonList from "../persons/PersonList";
 
 export default function RequestsWrap() {
-  const { user } = useAuthContext();
+  const { user, updateUserBasicInfo } = useAuthContext();
   const [lastSendList, setLastSendList] = useState([]);
   const [lastRecivedList, setLastRecivedList] = useState([]);
 
   const { data: requests, isLoading: requestsLoading } = useGetRequests();
 
+  console.log("USER", user);
   console.log("requests", requests);
 
   useEffect(() => {
@@ -28,15 +29,27 @@ export default function RequestsWrap() {
 
       const tmpRecived = requests
         .filter((request) => request.recipient.id === user.id)
-        .map((request) => ({
-          ...request.sender,
-          status: request.status,
-          requestId: request.id,
-        }))
+          .map((request) => {
+              console.log("REQUEST", request)
+              const updatedUser = {
+                  ...user,
+                  receivedRequests: request.recipient.receivedRequests,
+              };
+              updateUserBasicInfo(updatedUser);
+              return {
+                  ...request.sender,
+                  status: request.status,
+                  requestId: request.id,
+              };
+          })
         .slice(0, 3);
       setLastRecivedList(tmpRecived);
     }
   }, [requests]);
+
+    console.log("lastSendList", lastSendList)
+    console.log("lastRecivedList", lastRecivedList)
+
   return (
     <div>
       {!requestsLoading && lastSendList.length > 0 && (

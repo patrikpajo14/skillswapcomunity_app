@@ -8,11 +8,33 @@ const PersonCard = ({
   user,
   onClick,
   onDelete,
+  onAccept,
   handleOpenDrawer,
-  recived = false,
+  received = false,
   sent = false,
 }) => {
-  console.log("SENT", sent);
+  let buttonContent;
+
+  if (sent) {
+    buttonContent = (
+        <Button sx={"w-full mt-3"} onClick={onDelete}>
+          Unconnect
+        </Button>
+    );
+  } else if (received) {
+    buttonContent = (
+        <Button sx={"w-full mt-3"} onClick={onAccept}>
+          Accept
+        </Button>
+    );
+  } else {
+    buttonContent = (
+        <Button sx={"w-full mt-3"} onClick={onClick}>
+          Connect
+        </Button>
+    );
+  }
+
   return (
     <div className="card">
       <div className="flex gap-3 p-3">
@@ -48,15 +70,7 @@ const PersonCard = ({
             <span className="text-primary-red">{user?.experience} years</span>
           </p>
           <p className="text-sm">Cost: {user?.salary}</p>
-          {sent ? (
-            <Button sx={"w-full mt-3"} onClick={onDelete}>
-              Unconnect
-            </Button>
-          ) : (
-            <Button sx={"w-full mt-3"} onClick={onClick}>
-              Connect
-            </Button>
-          )}
+          {buttonContent}
         </div>
       </div>
     </div>
