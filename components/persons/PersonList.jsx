@@ -3,7 +3,12 @@ import PersonCard from "./PersonCard";
 import CustomDrawer from "../CustomDrawer";
 import PersonDetails from "./PersonDetails";
 import { useAuthContext } from "@/src/auth/context/auth/authContext";
-import {useCreateRequest, useDeleteRequest, useGetRequestById, useUpdateRequest} from "@/app/actions/GetRequests";
+import {
+  useCreateRequest,
+  useDeleteRequest,
+  useGetRequestById,
+  useUpdateRequest,
+} from "@/app/actions/GetRequests";
 
 const PersonList = ({ title = null, users, receivedList = false }) => {
   const { user, updateUserBasicInfo } = useAuthContext();
@@ -11,37 +16,43 @@ const PersonList = ({ title = null, users, receivedList = false }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [requestId, setRequestId] = useState(null);
 
-  const { data: requestForUpdate, isLoading: requestLoading, refetch: getUpdatedRequest } = useGetRequestById(requestId);
+  const {
+    data: requestForUpdate,
+    isLoading: requestLoading,
+    refetch: getUpdatedRequest,
+  } = useGetRequestById(requestId);
   const { mutate: sendRequest } = useCreateRequest();
   const { mutate: updateRequest } = useUpdateRequest();
   const { mutate: deleteRequest } = useDeleteRequest();
 
   const handleSendSwap = (recipientId) => {
-    sendRequest({ senderId: user?.id, recipientId },{
-      onSuccess: (data) => {
-        if (data?.status === 200 || data?.status === 201) {
-          updateUserBasicInfo(data?.data?.sender);
-        }
-      },
-    });
+    sendRequest(
+      { senderId: user?.id, recipientId },
+      {
+        onSuccess: (data) => {
+          if (data?.status === 200 || data?.status === 201) {
+            updateUserBasicInfo(data?.data?.sender);
+          }
+        },
+      }
+    );
   };
   const handleUpdateSwap = (request) => {
-    if(request !== null){
+    if (request !== null) {
       setRequestId(request.id);
       getUpdatedRequest().then((data) => {
-        console.log("FINDED REQUEST -------------------", data);
-        if(data.status === "success" || data.status === 200){
+        if (data.status === "success" || data.status === 200) {
           const updatedStatusRequest = {
             ...data.data,
             status: 20,
           };
-
-          console.log("updatedStatusRequest ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", updatedStatusRequest)
           updateRequest(updatedStatusRequest, {
             onSuccess: (updatedData) => {
-              console.log("updateRequest", updatedData);
-              // Uncomment and modify the following line as needed:
-              // updateUserBasicInfo(updatedData?.data?.sender);
+              console.log(
+                "updateRequest gggggggggggggggggggggggggggggggggg",
+                updatedData
+              );
+              updateUserBasicInfo(updatedData?.data?.recipient);
             },
           });
         }
@@ -49,10 +60,16 @@ const PersonList = ({ title = null, users, receivedList = false }) => {
     }
   };
   const handleDeleteSwap = (id) => {
-    deleteRequest(id,{
+    deleteRequest(id, {
       onSuccess: (data) => {
-        if (data?.status === 200 || data?.status === 201 || data?.status === 204) {
-          const updatedSentRequests = user.sentRequests.filter((req) => req.id !== id);
+        if (
+          data?.status === 200 ||
+          data?.status === 201 ||
+          data?.status === 204
+        ) {
+          const updatedSentRequests = user.sentRequests.filter(
+            (req) => req.id !== id
+          );
           const updatedUser = {
             ...user,
             sentRequests: updatedSentRequests,
@@ -89,24 +106,27 @@ const PersonList = ({ title = null, users, receivedList = false }) => {
                 (recReq) => recReq.id === sentReq.id
               )
             );
-            const existingReceivedRequest = user?.receivedRequests.find((recReq) =>
-                person?.sentRequests.some(
-                    (sentReq) => sentReq.id === recReq.id
-                )
+            const existingReceivedRequest = user?.receivedRequests.find(
+              (recReq) =>
+                person?.sentRequests.some((sentReq) => sentReq.id === recReq.id)
             );
-            console.log("existingSentRequest", existingSentRequest);
-            console.log("existingReceivedRequest", existingReceivedRequest);
+            /* console.log("existingSentRequest", existingSentRequest);
+            console.log("existingReceivedRequest", existingReceivedRequest); */
             return (
               <PersonCard
-                key={person.id}
+                key={person?.id}
                 user={person}
                 received={existingReceivedRequest !== undefined}
                 sent={existingSentRequest !== undefined}
                 onClick={() => {
-                  handleSendSwap(person.id);
+                  handleSendSwap(person?.id);
                 }}
                 onAccept={() => {
-                  handleUpdateSwap(existingReceivedRequest!== undefined ? {id: existingReceivedRequest.id, status: 20} : null);
+                  handleUpdateSwap(
+                    existingReceivedRequest !== undefined
+                      ? { id: existingReceivedRequest.id, status: 20 }
+                      : null
+                  );
                 }}
                 onDelete={() => {
                   handleDeleteSwap(existingSentRequest?.id);
