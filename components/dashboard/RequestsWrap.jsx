@@ -4,7 +4,7 @@ import { useAuthContext } from "@/src/auth/context/auth/authContext";
 import { useGetRequests } from "@/app/actions/GetRequests";
 import PersonList from "../persons/PersonList";
 
-export default function RequestsWrap({requests, isLoading}) {
+export default function RequestsWrap({requests, isLoading, t}) {
   const { user, updateUserBasicInfo } = useAuthContext();
   const [lastSendList, setLastSendList] = useState([]);
   const [lastRecivedList, setLastRecivedList] = useState([]);
@@ -51,13 +51,14 @@ export default function RequestsWrap({requests, isLoading}) {
   return (
     <div>
       {!isLoading && lastSendList.length > 0 && (
-        <PersonList title={"Last sent swaps"} users={lastSendList} />
+        <PersonList title={t("last_sent")} users={lastSendList} t={t} />
       )}
       {!isLoading && lastRecivedList.length > 0 && (
         <PersonList
-          title={"Last received swaps"}
+          title={t("last_received")}
           users={lastRecivedList}
           recivedList={true}
+          t={t}
         />
       )}
     </div>

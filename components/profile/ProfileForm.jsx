@@ -8,7 +8,7 @@ import { useAuthContext } from "@/src/auth/context/auth/authContext";
 import { useGetSkills } from "@/app/actions/GetSkills";
 import { useUpdateUser } from "@/app/actions/GetUsers";
 
-export default function ProfileForm() {
+export default function ProfileForm({t}) {
   const [isLoading, setIsLoading] = useState(false);
   const { user, updateUserBasicInfo } = useAuthContext();
   const { data: skills, isLoading: skillsLoading } = useGetSkills();
@@ -32,16 +32,6 @@ export default function ProfileForm() {
       company: user?.company?.id || "",
     },
   });
-  const company = [
-    {
-      id: 1,
-      name: "TVZ company",
-    },
-    {
-      id: 2,
-      name: "IT company",
-    },
-  ];
 
   const onSubmit = async (data) => {
     const updatedUser = {
@@ -89,14 +79,14 @@ export default function ProfileForm() {
               errors={errors}
               required
               id="name"
-              label="Name"
+              label={t("name")}
             />
             <Input
               disabled={isLoading}
               register={register}
               errors={errors}
               id="email"
-              label="Email"
+              label={t("email")}
               type="email"
             />
             <Input
@@ -104,18 +94,18 @@ export default function ProfileForm() {
               register={register}
               errors={errors}
               id="phone"
-              label="Phone"
+              label={t("phone")}
             />
             <Input
               disabled={isLoading}
               register={register}
               errors={errors}
               id="password"
-              label="Password"
+              label={t("password")}
               type="password"
             />
             <Select
-              label={"Skill"}
+              label={t("skill")}
               placeholder={"Select skill..."}
               disabled={skillsLoading}
               isLoading={skillsLoading}
@@ -129,7 +119,7 @@ export default function ProfileForm() {
               register={register}
               errors={errors}
               id="salary"
-              label="Salary"
+              label={t("salary")}
               type="number"
             />
             <Input
@@ -137,7 +127,7 @@ export default function ProfileForm() {
               register={register}
               errors={errors}
               id="experience"
-              label="Experience"
+              label={t("experience")}
               type="number"
             />
 
@@ -146,7 +136,7 @@ export default function ProfileForm() {
               register={register}
               errors={errors}
               id="description"
-              label="Description"
+              label={t("description")}
             />
 
             <Input
@@ -154,11 +144,11 @@ export default function ProfileForm() {
               register={register}
               errors={errors}
               id="achievements"
-              label="Achievements"
+              label={t("achievements")}
             />
             <div className="w-[200px]">
               <Button disabled={isLoading} fullWidth type="submit">
-                Save
+                {t("save")}
               </Button>
             </div>
           </div>

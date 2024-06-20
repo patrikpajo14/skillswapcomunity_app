@@ -10,7 +10,7 @@ import {
   useUpdateRequest,
 } from "@/app/actions/GetRequests";
 
-const PersonList = ({ title = null, users, receivedList = false, findUsers = false}) => {
+const PersonList = ({ title = null, users, receivedList = false, findUsers = false, t}) => {
   const { user, updateUserBasicInfo } = useAuthContext();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -134,6 +134,7 @@ const PersonList = ({ title = null, users, receivedList = false, findUsers = fal
                       handleOpenDrawer={() => {
                         handleOpenDrawer(person);
                       }}
+                      t={t}
                   />
               );
             }
@@ -143,7 +144,7 @@ const PersonList = ({ title = null, users, receivedList = false, findUsers = fal
       <CustomDrawer
         isOpened={openDrawer}
         onClose={handleCloseDrawer}
-        title={"User details"}
+        title={t("user_details")}
       >
         {selectedUser && (
           <PersonDetails

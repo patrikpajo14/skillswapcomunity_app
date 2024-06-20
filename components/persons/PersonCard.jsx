@@ -12,26 +12,27 @@ const PersonCard = ({
   handleOpenDrawer,
   received = false,
   sent = false,
-    forDelete= false
+    forDelete= false,
+    t
 }) => {
   let buttonContent;
 
   if (sent || forDelete) {
     buttonContent = (
         <Button sx={"w-full mt-3"} onClick={onDelete}>
-          Unconnect
+          {t("unconnect")}
         </Button>
     );
   } else if (received) {
     buttonContent = (
         <Button sx={"w-full mt-3"} onClick={onAccept}>
-          Accept
+          {t("accept")}
         </Button>
     );
   } else {
     buttonContent = (
         <Button sx={"w-full mt-3"} onClick={onClick}>
-          Connect
+          {t("connect")}
         </Button>
     );
   }
@@ -67,10 +68,10 @@ const PersonCard = ({
             <Rating value={user?.rating} readOnly={true} size={60} />
           </div>
           <p className="text-sm font-medium">
-            Expirience ={" "}
-            <span className="text-primary-red">{user?.experience} years</span>
+            {t("experience")} ={" "}
+            <span className="text-primary-red">{user?.experience} {t("years")}</span>
           </p>
-          <p className="text-sm">Cost: {user?.salary}</p>
+          <p className="text-sm">{t("cost")}: {user?.salary}</p>
           {buttonContent}
         </div>
       </div>
