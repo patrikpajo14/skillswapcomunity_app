@@ -29,5 +29,8 @@
   "years": "godine",
   "current_swaps": "Trenutne zamjene",
   "find_swaps": "Pronađi zamjene",
-  "profile": "Profil"
+  "profile": "Profil",
+  "accepted_swaps": "Prihvaćeni zahtjevi",
+  "sent_swaps": "Poslani zahtjevi",
+  "received_swaps": "Primljeni zahtjevi"
 }

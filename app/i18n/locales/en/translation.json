@@ -29,5 +29,8 @@
   "years": "years",
   "current_swaps": "Current swaps",
   "find_swaps": "Find swaps",
-  "profile": "Profile"
+  "profile": "Profile",
+  "accepted_swaps": "Accepted Swaps",
+  "sent_swaps": "Swaps sent",
+  "received_swaps": "Received swaps"
 }

@@ -17,21 +17,11 @@ const Dashboard = () => {
     <section>
       <PageSubheader
         title={t("dashboard")}
-        /*body={
-          <div className="flex gap-4 items-center">
-            <Link
-              href={`/${currentLang}/dashboard/find-users`}
-              className="primary_btn"
-            >
-              Swap skills
-            </Link>
-          </div>
-        }*/
       />
 
         {!requestsLoading && requests ? (
             <>
-                <WidgetsRow requests={requests} isLoading={requestsLoading} />
+                <WidgetsRow t={t} />
 
                 <RequestsWrap requests={requests} isLoading={requestsLoading} t={t} />
             </>
