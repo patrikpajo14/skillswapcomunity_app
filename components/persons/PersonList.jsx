@@ -10,7 +10,7 @@ import {
   useUpdateRequest,
 } from "@/app/actions/GetRequests";
 
-const PersonList = ({ title = null, users, receivedList = false }) => {
+const PersonList = ({ title = null, users, receivedList = false, findUsers = false}) => {
   const { user, updateUserBasicInfo } = useAuthContext();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -48,10 +48,6 @@ const PersonList = ({ title = null, users, receivedList = false }) => {
           };
           updateRequest(updatedStatusRequest, {
             onSuccess: (updatedData) => {
-              console.log(
-                "updateRequest gggggggggggggggggggggggggggggggggg",
-                updatedData
-              );
               updateUserBasicInfo(updatedData?.data?.recipient);
             },
           });
@@ -110,32 +106,37 @@ const PersonList = ({ title = null, users, receivedList = false }) => {
               (recReq) =>
                 person?.sentRequests.some((sentReq) => sentReq.id === recReq.id)
             );
-            /* console.log("existingSentRequest", existingSentRequest);
-            console.log("existingReceivedRequest", existingReceivedRequest); */
-            return (
-              <PersonCard
-                key={person?.id}
-                user={person}
-                received={existingReceivedRequest !== undefined}
-                sent={existingSentRequest !== undefined}
-                onClick={() => {
-                  handleSendSwap(person?.id);
-                }}
-                onAccept={() => {
-                  handleUpdateSwap(
-                    existingReceivedRequest !== undefined
-                      ? { id: existingReceivedRequest.id, status: 20 }
-                      : null
-                  );
-                }}
-                onDelete={() => {
-                  handleDeleteSwap(existingSentRequest?.id);
-                }}
-                handleOpenDrawer={() => {
-                  handleOpenDrawer(person);
-                }}
-              />
-            );
+
+            const forDelete = existingSentRequest !== undefined || existingReceivedRequest?.status === 20;
+            if(findUsers && (existingReceivedRequest?.status === 20 || existingSentRequest?.status === 20)){
+              return ""
+            }else{
+              return (
+                  <PersonCard
+                      key={person?.id}
+                      user={person}
+                      received={existingReceivedRequest !== undefined}
+                      sent={existingSentRequest !== undefined}
+                      forDelete={forDelete}
+                      onClick={() => {
+                        handleSendSwap(person?.id);
+                      }}
+                      onAccept={() => {
+                        handleUpdateSwap(
+                            existingReceivedRequest !== undefined
+                                ? { id: existingReceivedRequest.id, status: 20 }
+                                : null
+                        );
+                      }}
+                      onDelete={() => {
+                        handleDeleteSwap(existingSentRequest?.id);
+                      }}
+                      handleOpenDrawer={() => {
+                        handleOpenDrawer(person);
+                      }}
+                  />
+              );
+            }
           })}
       </div>
 

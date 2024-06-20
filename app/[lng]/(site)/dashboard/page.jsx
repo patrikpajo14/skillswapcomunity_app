@@ -5,9 +5,12 @@ import RequestsWrap from "@/components/dashboard/RequestsWrap";
 import WidgetsRow from "@/components/dashboard/WidgetsRow";
 import Link from "next/link";
 import React from "react";
+import {useGetRequests} from "@/app/actions/GetRequests";
 
 const Dashboard = () => {
   const { currentLang } = useLangStore();
+
+  const { data: requests, isLoading: requestsLoading } = useGetRequests();
 
   return (
     <section>
@@ -25,9 +28,15 @@ const Dashboard = () => {
         }
       />
 
-      <WidgetsRow />
+        {!requestsLoading && requests ? (
+            <>
+                <WidgetsRow requests={requests} isLoading={requestsLoading} />
 
-      <RequestsWrap />
+                <RequestsWrap requests={requests} isLoading={requestsLoading} />
+            </>
+        ) : (
+            <p>Loading...</p>
+        )}
     </section>
   );
 };

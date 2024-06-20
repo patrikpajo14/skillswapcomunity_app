@@ -4,7 +4,7 @@ import React from "react";
 import SmallWidget from "./SmallWidget";
 import WidgetWithGraph from "./WidgetWithGraph";
 
-const WidgetsRow = () => {
+const WidgetsRow = ({requests, isLoading}) => {
   /*  const { data: offers, isLoading } = useGetOffers();
 
   if (isLoading) {

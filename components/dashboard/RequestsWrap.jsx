@@ -4,70 +4,56 @@ import { useAuthContext } from "@/src/auth/context/auth/authContext";
 import { useGetRequests } from "@/app/actions/GetRequests";
 import PersonList from "../persons/PersonList";
 
-export default function RequestsWrap() {
+export default function RequestsWrap({requests, isLoading}) {
   const { user, updateUserBasicInfo } = useAuthContext();
   const [lastSendList, setLastSendList] = useState([]);
   const [lastRecivedList, setLastRecivedList] = useState([]);
 
-  const { data: requests, isLoading: requestsLoading } = useGetRequests();
-
-  console.log("USER", user);
-  console.log("requests", requests);
-
   useEffect(() => {
-    if (!requestsLoading) {
+    if (!isLoading) {
       const tmpSend = requests
         .filter(
           (request) =>
-            request.sender.id === user.id || request.sender === user.id
+            (request.sender.id === user.id || request.sender === user.id) && request.status !== 20
         )
         .map((request) => {
-          if (request.status !== 20) {
-            return {
-              ...request.recipient,
-              status: request.status,
-              requestId: request.id,
-            };
-          }
+          return {
+            ...request.recipient,
+            status: request.status,
+            requestId: request.id,
+          };
         })
         .slice(0, 3);
       setLastSendList(tmpSend);
-      console.log("lastSendList", tmpSend);
 
       const tmpRecived = requests
         .filter(
           (request) =>
-            request.recipient.id === user.id || request.sender === user.id
+            (request.recipient.id === user.id || request.sender === user.id) && request.status !== 20
         )
         .map((request) => {
-          console.log("REQUEST", request);
-          if (request.status !== 20) {
-            const updatedUser = {
-              ...user,
-              receivedRequests: request.recipient.receivedRequests,
-            };
-            updateUserBasicInfo(updatedUser);
-            return {
-              ...request.sender,
-              status: request.status,
-              requestId: request.id,
-            };
-          }
+          const updatedUser = {
+            ...user,
+            receivedRequests: request.recipient.receivedRequests,
+          };
+          updateUserBasicInfo(updatedUser);
+          return {
+            ...request.sender,
+            status: request.status,
+            requestId: request.id,
+          };
         })
         .slice(0, 3);
-      setLastRecivedList(tmpRecived);
+      if(tmpRecived) setLastRecivedList(tmpRecived);
     }
   }, [requests]);
 
-  console.log("lastSendList", lastSendList);
-  console.log("lastRecivedList", lastRecivedList);
-
   return (
     <div>
-      {!requestsLoading && lastSendList.length > 0 && (
+      {!isLoading && lastSendList.length > 0 && (
         <PersonList title={"Last sent swaps"} users={lastSendList} />
       )}
-      {!requestsLoading && lastRecivedList.length > 0 && (
+      {!isLoading && lastRecivedList.length > 0 && (
         <PersonList
           title={"Last received swaps"}
           users={lastRecivedList}

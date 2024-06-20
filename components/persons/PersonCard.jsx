@@ -12,10 +12,11 @@ const PersonCard = ({
   handleOpenDrawer,
   received = false,
   sent = false,
+    forDelete= false
 }) => {
   let buttonContent;
 
-  if (sent) {
+  if (sent || forDelete) {
     buttonContent = (
         <Button sx={"w-full mt-3"} onClick={onDelete}>
           Unconnect

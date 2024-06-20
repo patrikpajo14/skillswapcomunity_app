@@ -20,17 +20,14 @@ const useProtectedRequestHeaders = () => {
           logoutUser();
           router.push("/auth/login");
         } else {
-          console.log("HAVE TOKEN CREATE HEADERS");
           try {
             config.headers["Authorization"] = `Bearer ${session?.token}`;
-            console.log("config", config);
           } catch (error) {
             console.error("Error refreshing token:", error);
           }
         }
 
         if (!config.headers["Authorization"]) {
-          console.log("config dosent have hadears", config);
           config.headers["Authorization"] = `Bearer ${session?.token}`;
         }
 
@@ -45,11 +42,6 @@ const useProtectedRequestHeaders = () => {
       async (error) => {
         const prevRequest = error?.config;
         if (error?.response?.status === 403 && !prevRequest?.sent) {
-          console.log(
-            "error?.response?.status === 403 && !prevRequest?.sent",
-            error?.response,
-            prevRequest
-          );
           prevRequest.sent = true;
           //router.push('/403');
         }

@@ -20,12 +20,10 @@ export const useGetRequests = () => {
 
 const fetchRequestById = ({ queryKey }) => {
   const [_, id] = queryKey;
-  console.log("fetchRequestById !!!!!!!!!!!!!", id)
   return appPublicRequest.get(`/requests/${id}`);
 };
 
 export const useGetRequestById = (id) => {
-  console.log("useGetRequestById", id)
   return useQuery(["requestById", id], fetchRequestById, {
     select: (data) => {
       return data.data;
@@ -56,7 +54,6 @@ export const useCreateRequest = () => {
 
 
 const updateRequest = (data) => {
-  console.log("updateRequest ###############", data)
   return appPublicRequest.put(`/requests/${data.id}`, data);
 };
 

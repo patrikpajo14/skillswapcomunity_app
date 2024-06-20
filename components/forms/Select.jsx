@@ -22,8 +22,6 @@ const Select = ({
     value !== undefined ? value : ""
   );
 
-  console.log("options list", optionList);
-
   return (
     <div className="z-[100] flex-1">
       <label

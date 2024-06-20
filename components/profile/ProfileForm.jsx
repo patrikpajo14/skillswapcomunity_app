@@ -14,8 +14,6 @@ export default function ProfileForm() {
   const { data: skills, isLoading: skillsLoading } = useGetSkills();
   const { mutate: updateUser } = useUpdateUser();
 
-  console.log("USER", user);
-
   const {
     register,
     handleSubmit,
@@ -46,8 +44,6 @@ export default function ProfileForm() {
   ];
 
   const onSubmit = async (data) => {
-    console.log("SUBMIT", data);
-
     const updatedUser = {
       id: user?.id,
       name: data?.name,

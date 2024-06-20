@@ -32,7 +32,6 @@ export const useGetUserById = (id) => {
 };
 
 const updateUser = (data) => {
-  console.log("updateUserStatus", data);
   return appPublicRequest.put(`/person/${data.id}`, data.body);
 };
 

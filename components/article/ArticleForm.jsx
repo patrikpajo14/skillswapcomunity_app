@@ -109,7 +109,6 @@ export default function ArticleForm({
         if (!isEdit) {
           addArticle(data);
         }
-        // console.log("DATA", data);
       } catch (error) {
         console.error(error);
       }
